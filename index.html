@@ -1,0 +1,27 @@
+<!doctype html>
+<!-- Canvasplay - An HTML5 <canvas> playground to fiddle with animations in an interactive way. -->
+<!-- 2012, Jean-Karim Bockstael <jkb@jkbockstael.be> -->
+<html>
+<head>
+	<title>Canvasplay</title>
+	<link rel="stylesheet" type="text/css" href="canvasplay.css" />
+	<script type="text/javascript" src="canvasplay.js"></script>
+</head>
+<body>
+	<canvas id="canvasoutput" width="500", height="500"></canvas>
+	<textarea id="codeinput">Code here</textarea>
+	<button id="runbutton">Run</button>
+	<button id="stopbutton">Stop</button>
+	<span id="framerate">FPS: </span>
+	<script type="text/javascript">
+		window.cp = canvasPlay();
+		cp.init({
+			canvas: "canvasoutput",
+			code: "codeinput",
+			run: "runbutton",
+			stop: "stopbutton",
+			framerate: "framerate"
+		});
+	</script>
+</body>
+</html>

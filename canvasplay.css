@@ -1,0 +1,8 @@
+#canvasoutput {
+	position: relative !important; /* Required for cursor position tracking */
+	border: solid 1px black;
+}
+#codeinput {
+	width: 500px;
+	height: 500px;
+}
