@@ -155,6 +155,8 @@ var canvasPlay = function(options) {
 	};
 
 	var _showHide = function(){
+		// Refresh the variable with current state of dom
+		_dom.code = document.getElementById("code");
 		if(_dom.code.getAttribute("class")=="hide"){
 			_dom.code.setAttribute("class","");
 		}else{
