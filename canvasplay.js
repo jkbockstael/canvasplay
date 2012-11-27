@@ -8,7 +8,9 @@ var canvasPlay = function(options) {
 		code: undefined,
 		run: undefined,
 		stop: undefined,
-		framerate: undefined
+		framerate: undefined,
+		showHideButton: undefined,
+		switchSideButton: undefined
 	};
 	var _storedCode = "";
 	var _frameCounter = 0;
@@ -28,6 +30,8 @@ var canvasPlay = function(options) {
 		_dom.run = document.getElementById(options.run);
 		_dom.stop = document.getElementById(options.stop);
 		_dom.framerate = document.getElementById(options.framerate);
+		_dom.showHideButton = document.getElementById(options.showHideButton);
+		_dom.switchSideButton = document.getElementById(options.switchSideButton);
 		_storedCode = localStorage.getItem("canvasplay_code");
 		if (_storedCode !== undefined && _storedCode !== null) {
 			_dom.code.value = _storedCode;
@@ -59,6 +63,12 @@ var canvasPlay = function(options) {
 			_cursor.x = event.layerX;
 			_cursor.y = event.layerY
 		};
+		_dom.showHideButton.onclick = _showHide;
+		_dom.switchSideButton.onclick = _switchSide;
+		_reziseCanvas();
+		window.onresize = function(event){
+			_reziseCanvas();
+		}
 	}
 
 	// Shim for Chrome + auto-cancel + auto-framerate
@@ -83,6 +93,7 @@ var canvasPlay = function(options) {
 
 	// Implementation for public interface
 	var _run = function() {
+		myCodeMirror.save();
 		var code = _dom.code.value;
 		_stop();
 		// Store code in local storage
@@ -94,6 +105,7 @@ var canvasPlay = function(options) {
 	};
 
 	var _stop = function() {
+		myCodeMirror.save();
 		// Clear any pending animation frames
 		for (var i = 0, l = _rafMaxId; i <= l; i++) {
 			window.cancelAnimationFrame(i);
@@ -145,6 +157,40 @@ var canvasPlay = function(options) {
 				// No default case, a default value has already been provided.
 			}
 		}
+	};
+
+	var _showHide = function(){
+		// Refresh the variable with current state of dom
+		_dom.code = document.getElementById("code");
+		var stringAttribute = _dom.code.getAttribute("class");
+		if(stringAttribute.indexOf('hide') !== -1){
+			var attributes = stringAttribute.split(' ');
+			_dom.code.setAttribute("class",attributes[0]);
+		}else{
+			_dom.code.setAttribute("class", stringAttribute+" hide");
+		}
+	};
+
+	var _switchSide = function(){
+		// Refresh the variable with current state of dom
+		_dom.code = document.getElementById("code");
+		var stringAttribute = _dom.code.getAttribute("class");
+		var attributes = stringAttribute.split(' ');
+		if(stringAttribute.indexOf('bottom') !== -1){
+			attributes[0] = "left";
+		}else{
+			attributes[0] = "bottom";
+		}
+		if(attributes[1]){
+			_dom.code.setAttribute("class",attributes[0]+' '+attributes[1]);
+		}else{
+			_dom.code.setAttribute("class",attributes[0]);
+		}
+	};
+
+	var _reziseCanvas = function(){
+		_dom.canvas.setAttribute('width',window.innerWidth);
+		_dom.canvas.setAttribute('height',window.innerHeight);
 	};
 	
 	// Public interface
