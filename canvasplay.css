@@ -1,8 +1,73 @@
-#canvasoutput {
-	position: relative !important; /* Required for cursor position tracking */
-	border: solid 1px black;
+*{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
-#codeinput {
+#canvasoutput {
+	margin:0;
+	padding:0;
+	position: fixed;
+	top:0;
+	left:0;
+}
+#code{
+	position: fixed;
+	background: rgba(255,255,255,0.3);
+	margin: 0;
+	left:0;
+	padding: 10px 10px;
+}
+.bottom{
+	width:100%;
+	height: 337px;
+	bottom: 0px;
+	border-top: 7px solid rgba(0,0,0,.4);
+}
+.left{
+	height: 100%;
 	width: 500px;
+	top:0px;
+	border-right: 7px solid rgba(0,0,0,.4);
+}
+.left .CodeMirror-scroll{
 	height: 500px;
+}
+.left #showHideButton, .left #switchSideButton{
+	float:right;
+	margin:0 0 10px 10px;
+	display: inline;
+}
+.bottom #showHideButton, .bottom #switchSideButton{
+	float:right;
+	margin:0 0 10px 10px;
+}
+#framerate{
+	float: left;
+	background:black;
+	color:white;
+	padding: 4px 8px;
+	font-family: Consolas, Monaco, Courier, monospace;
+	font-size: 12px;
+}
+textarea{
+	font-family: Consolas, Monaco, Courier, monospace;
+}
+.hide.bottom{
+	height:46px !important;
+}
+.hide.left{
+	width: 95px !important;
+	text-align: left;
+}
+.hide.left #framerate{
+	float: none;
+	margin-bottom: 5px;
+}
+.hide.left .CodeMirror, .hide.left #runbutton, .hide.left #stopbutton{
+	display: none;
+}
+.hide.left button{
+	display: block;
+	float: none !important;
+	margin: 0 0 5px 0 !important;
 }

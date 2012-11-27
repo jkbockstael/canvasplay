@@ -5,14 +5,21 @@
 <head>
 	<title>Canvasplay</title>
 	<link rel="stylesheet" type="text/css" href="canvasplay.css" />
+	<link rel="stylesheet" href="vendor/codemirror/codemirror.css">
 	<script type="text/javascript" src="canvasplay.js"></script>
+	<script type="text/javascript" src="vendor/codemirror/codemirror.js"></script>
+	<script type="text/javascript" src="vendor/codemirror/mode/javascript.js"></script>
 </head>
 <body>
 	<canvas id="canvasoutput" width="500", height="500"></canvas>
-	<textarea id="codeinput">Code here</textarea>
-	<button id="runbutton">Run</button>
-	<button id="stopbutton">Stop</button>
-	<span id="framerate">FPS: </span>
+	<div id="code" class="bottom">
+		<span id="framerate">FPS: </span>
+		<button id="showHideButton">Show/Hide</button>	
+		<button id="switchSideButton">Switch</button>	
+		<textarea id="codeinput">Code here</textarea>
+		<button id="runbutton">Run</button>
+		<button id="stopbutton">Stop</button>
+	</div>
 	<script type="text/javascript">
 		window.cp = canvasPlay();
 		cp.init({
@@ -20,7 +27,14 @@
 			code: "codeinput",
 			run: "runbutton",
 			stop: "stopbutton",
-			framerate: "framerate"
+			framerate: "framerate",
+			showHideButton: "showHideButton",
+			switchSideButton: "switchSideButton"
+		});
+		var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeinput'),{
+			lineNumbers: true,
+			matchBrackets: true,
+			mode: "text/typescript"
 		});
 	</script>
 </body>
