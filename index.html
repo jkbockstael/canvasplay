@@ -12,9 +12,10 @@
 </head>
 <body>
 	<canvas id="canvasoutput" width="500", height="500"></canvas>
-	<div id="code" class>
+	<div id="code" class="bottom">
 		<span id="framerate">FPS: </span>
 		<button id="showHideButton">Show/Hide</button>	
+		<button id="switchSideButton">Switch</button>	
 		<textarea id="codeinput">Code here</textarea>
 		<button id="runbutton">Run</button>
 		<button id="stopbutton">Stop</button>
@@ -27,7 +28,8 @@
 			run: "runbutton",
 			stop: "stopbutton",
 			framerate: "framerate",
-			showHideButton: "showHideButton"
+			showHideButton: "showHideButton",
+			switchSideButton: "switchSideButton"
 		});
 		var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeinput'),{
 			lineNumbers: true,

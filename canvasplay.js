@@ -9,7 +9,8 @@ var canvasPlay = function(options) {
 		run: undefined,
 		stop: undefined,
 		framerate: undefined,
-		showHideButton: undefined
+		showHideButton: undefined,
+		switchSideButton: undefined
 	};
 	var _storedCode = "";
 	var _frameCounter = 0;
@@ -30,6 +31,7 @@ var canvasPlay = function(options) {
 		_dom.stop = document.getElementById(options.stop);
 		_dom.framerate = document.getElementById(options.framerate);
 		_dom.showHideButton = document.getElementById(options.showHideButton);
+		_dom.switchSideButton = document.getElementById(options.switchSideButton);
 		_storedCode = localStorage.getItem("canvasplay_code");
 		if (_storedCode !== undefined && _storedCode !== null) {
 			_dom.code.value = _storedCode;
@@ -62,6 +64,7 @@ var canvasPlay = function(options) {
 			_cursor.y = event.layerY
 		};
 		_dom.showHideButton.onclick = _showHide;
+		_dom.switchSideButton.onclick = _switchSide;
 		_reziseCanvas();
 		window.onresize = function(event){
 			_reziseCanvas();
@@ -90,6 +93,7 @@ var canvasPlay = function(options) {
 
 	// Implementation for public interface
 	var _run = function() {
+		myCodeMirror.save();
 		var code = _dom.code.value;
 		_stop();
 		// Store code in local storage
@@ -101,6 +105,7 @@ var canvasPlay = function(options) {
 	};
 
 	var _stop = function() {
+		myCodeMirror.save();
 		// Clear any pending animation frames
 		for (var i = 0, l = _rafMaxId; i <= l; i++) {
 			window.cancelAnimationFrame(i);
@@ -157,17 +162,36 @@ var canvasPlay = function(options) {
 	var _showHide = function(){
 		// Refresh the variable with current state of dom
 		_dom.code = document.getElementById("code");
-		if(_dom.code.getAttribute("class")=="hide"){
-			_dom.code.setAttribute("class","");
+		var stringAttribute = _dom.code.getAttribute("class");
+		if(stringAttribute.indexOf('hide') !== -1){
+			var attributes = stringAttribute.split(' ');
+			_dom.code.setAttribute("class",attributes[0]);
 		}else{
-			_dom.code.setAttribute("class","hide");
+			_dom.code.setAttribute("class", stringAttribute+" hide");
 		}
-	}
+	};
+
+	var _switchSide = function(){
+		// Refresh the variable with current state of dom
+		_dom.code = document.getElementById("code");
+		var stringAttribute = _dom.code.getAttribute("class");
+		var attributes = stringAttribute.split(' ');
+		if(stringAttribute.indexOf('bottom') !== -1){
+			attributes[0] = "left";
+		}else{
+			attributes[0] = "bottom";
+		}
+		if(attributes[1]){
+			_dom.code.setAttribute("class",attributes[0]+' '+attributes[1]);
+		}else{
+			_dom.code.setAttribute("class",attributes[0]);
+		}
+	};
 
 	var _reziseCanvas = function(){
-		_dom.canvas.setAttribute('width',window.innerWidth)
+		_dom.canvas.setAttribute('width',window.innerWidth);
 		_dom.canvas.setAttribute('height',window.innerHeight);
-	}
+	};
 	
 	// Public interface
 	return {
