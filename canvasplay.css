@@ -35,3 +35,6 @@
 #framerate{
 	float: left;
 }
+textarea{
+	font-family: Consolas, Monaco, Courier, monospace;
+}
