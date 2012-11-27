@@ -155,11 +155,10 @@ var canvasPlay = function(options) {
 	};
 
 	var _showHide = function(){
-		var code = document.getElementById('code')
-		if(code.getAttribute("class")=="hide"){
-			code.setAttribute("class","");
+		if(_dom.code.getAttribute("class")=="hide"){
+			_dom.code.setAttribute("class","");
 		}else{
-			code.setAttribute("class","hide");
+			_dom.code.setAttribute("class","hide");
 		}
 	}
 
