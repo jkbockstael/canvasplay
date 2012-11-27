@@ -5,7 +5,10 @@
 <head>
 	<title>Canvasplay</title>
 	<link rel="stylesheet" type="text/css" href="canvasplay.css" />
+	<link rel="stylesheet" href="vendor/codemirror/codemirror.css">
 	<script type="text/javascript" src="canvasplay.js"></script>
+	<script type="text/javascript" src="vendor/codemirror/codemirror.js"></script>
+	<script type="text/javascript" src="vendor/codemirror/mode/javascript.js"></script>
 </head>
 <body>
 	<canvas id="canvasoutput" width="500", height="500"></canvas>
@@ -25,6 +28,11 @@
 			stop: "stopbutton",
 			framerate: "framerate",
 			showHideButton: "showHideButton"
+		});
+		var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeinput'),{
+			lineNumbers: true,
+			matchBrackets: true,
+			mode: "text/typescript"
 		});
 	</script>
 </body>
