@@ -21,6 +21,11 @@
 		<button id="stopbutton">Stop</button>
 	</div>
 	<script type="text/javascript">
+		var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeinput'),{
+			lineNumbers: true,
+			matchBrackets: true,
+			mode: "text/typescript"
+		});
 		window.cp = canvasPlay();
 		cp.init({
 			canvas: "canvasoutput",
@@ -30,11 +35,6 @@
 			framerate: "framerate",
 			showHideButton: "showHideButton",
 			switchSideButton: "switchSideButton"
-		});
-		var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeinput'),{
-			lineNumbers: true,
-			matchBrackets: true,
-			mode: "text/typescript"
 		});
 	</script>
 </body>

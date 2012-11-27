@@ -34,7 +34,7 @@ var canvasPlay = function(options) {
 		_dom.switchSideButton = document.getElementById(options.switchSideButton);
 		_storedCode = localStorage.getItem("canvasplay_code");
 		if (_storedCode !== undefined && _storedCode !== null) {
-			_dom.code.value = _storedCode;
+			myCodeMirror.setValue(_storedCode);
 		}
 		else {
 			_dom.code.value = "Code here";
@@ -93,8 +93,7 @@ var canvasPlay = function(options) {
 
 	// Implementation for public interface
 	var _run = function() {
-		myCodeMirror.save();
-		var code = _dom.code.value;
+		var code = myCodeMirror.getValue();
 		_stop();
 		// Store code in local storage
 		localStorage.setItem("canvasplay_code", code);
@@ -105,7 +104,6 @@ var canvasPlay = function(options) {
 	};
 
 	var _stop = function() {
-		myCodeMirror.save();
 		// Clear any pending animation frames
 		for (var i = 0, l = _rafMaxId; i <= l; i++) {
 			window.cancelAnimationFrame(i);
