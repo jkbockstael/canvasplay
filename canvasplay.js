@@ -62,6 +62,10 @@ var canvasPlay = function(options) {
 			_cursor.y = event.layerY
 		};
 		_dom.showHideButton.onclick = _showHide;
+		_reziseCanvas();
+		window.onresize = function(event){
+			_reziseCanvas();
+		}
 	}
 
 	// Shim for Chrome + auto-cancel + auto-framerate
@@ -157,6 +161,11 @@ var canvasPlay = function(options) {
 		}else{
 			code.setAttribute("class","hide");
 		}
+	}
+
+	var _reziseCanvas = function(){
+		_dom.canvas.setAttribute('width',window.innerWidth)
+		_dom.canvas.setAttribute('height',window.innerHeight);
 	}
 	
 	// Public interface
