@@ -8,7 +8,8 @@ var canvasPlay = function(options) {
 		code: undefined,
 		run: undefined,
 		stop: undefined,
-		framerate: undefined
+		framerate: undefined,
+		showHideButton: undefined
 	};
 	var _storedCode = "";
 	var _frameCounter = 0;
@@ -28,6 +29,7 @@ var canvasPlay = function(options) {
 		_dom.run = document.getElementById(options.run);
 		_dom.stop = document.getElementById(options.stop);
 		_dom.framerate = document.getElementById(options.framerate);
+		_dom.showHideButton = document.getElementById(options.showHideButton);
 		_storedCode = localStorage.getItem("canvasplay_code");
 		if (_storedCode !== undefined && _storedCode !== null) {
 			_dom.code.value = _storedCode;
@@ -59,6 +61,7 @@ var canvasPlay = function(options) {
 			_cursor.x = event.layerX;
 			_cursor.y = event.layerY
 		};
+		_dom.showHideButton.onclick = _showHide;
 	}
 
 	// Shim for Chrome + auto-cancel + auto-framerate
@@ -146,6 +149,15 @@ var canvasPlay = function(options) {
 			}
 		}
 	};
+
+	var _showHide = function(){
+		var code = document.getElementById('code')
+		if(code.getAttribute("class")=="hide"){
+			code.setAttribute("class","");
+		}else{
+			code.setAttribute("class","hide");
+		}
+	}
 	
 	// Public interface
 	return {

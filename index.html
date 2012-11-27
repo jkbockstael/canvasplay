@@ -9,10 +9,13 @@
 </head>
 <body>
 	<canvas id="canvasoutput" width="500", height="500"></canvas>
-	<textarea id="codeinput">Code here</textarea>
-	<button id="runbutton">Run</button>
-	<button id="stopbutton">Stop</button>
-	<span id="framerate">FPS: </span>
+	<div id="code" class>
+		<span id="framerate">FPS: </span>
+		<button id="showHideButton">Show/Hide</button>	
+		<textarea id="codeinput">Code here</textarea>
+		<button id="runbutton">Run</button>
+		<button id="stopbutton">Stop</button>
+	</div>
 	<script type="text/javascript">
 		window.cp = canvasPlay();
 		cp.init({
@@ -20,7 +23,8 @@
 			code: "codeinput",
 			run: "runbutton",
 			stop: "stopbutton",
-			framerate: "framerate"
+			framerate: "framerate",
+			showHideButton: "showHideButton"
 		});
 	</script>
 </body>
