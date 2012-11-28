@@ -32,15 +32,22 @@
 .left .CodeMirror-scroll{
 	height: 500px;
 }
-.left #showHideButton, .left #switchSideButton{
-	float:right;
+.left button {
 	margin:0 0 10px 10px;
 	display: inline;
 }
-.bottom #showHideButton, .bottom #switchSideButton{
-	float:right;
+.bottom button {
 	margin:0 0 10px 10px;
 }
+
+#buttons {
+	float: right;
+}
+
+.left #buttons {
+	margin-top: 10px;
+}
+
 #framerate{
 	float: left;
 	background:black;
@@ -63,7 +70,7 @@ textarea{
 	float: none;
 	margin-bottom: 5px;
 }
-.hide.left .CodeMirror, .hide.left #runbutton, .hide.left #stopbutton{
+.hide.left .CodeMirror {
 	display: none;
 }
 .hide.left button{
