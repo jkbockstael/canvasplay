@@ -6,11 +6,11 @@ var canvasPlay = function(options) {
 	var _dom = {
 		canvas: undefined,
 		code: undefined,
+		framerate: undefined,
 		run: undefined,
 		stop: undefined,
-		framerate: undefined,
-		showHideButton: undefined,
-		switchSideButton: undefined
+		hide: undefined,
+		switchSide: undefined
 	};
 	var _storedCode = "";
 	var _frameCounter = 0;
@@ -30,8 +30,8 @@ var canvasPlay = function(options) {
 		_dom.run = document.getElementById(options.run);
 		_dom.stop = document.getElementById(options.stop);
 		_dom.framerate = document.getElementById(options.framerate);
-		_dom.showHideButton = document.getElementById(options.showHideButton);
-		_dom.switchSideButton = document.getElementById(options.switchSideButton);
+		_dom.hide = document.getElementById(options.hide);
+		_dom.switchSide = document.getElementById(options.switchSide);
 		_storedCode = localStorage.getItem("canvasplay_code");
 		if (_storedCode !== undefined && _storedCode !== null) {
 			myCodeMirror.setValue(_storedCode);
@@ -63,11 +63,11 @@ var canvasPlay = function(options) {
 			_cursor.x = event.layerX;
 			_cursor.y = event.layerY
 		};
-		_dom.showHideButton.onclick = _showHide;
-		_dom.switchSideButton.onclick = _switchSide;
-		_reziseCanvas();
+		_dom.hide.onclick = _showHide;
+		_dom.switchSide.onclick = _switchSide;
+		_resizeCanvas();
 		window.onresize = function(event){
-			_reziseCanvas();
+			_resizeCanvas();
 		}
 	}
 
@@ -161,11 +161,12 @@ var canvasPlay = function(options) {
 		// Refresh the variable with current state of dom
 		_dom.code = document.getElementById("code");
 		var stringAttribute = _dom.code.getAttribute("class");
-		if(stringAttribute.indexOf('hide') !== -1){
+		if (stringAttribute.indexOf('hide') !== -1) {
 			var attributes = stringAttribute.split(' ');
-			_dom.code.setAttribute("class",attributes[0]);
-		}else{
-			_dom.code.setAttribute("class", stringAttribute+" hide");
+			_dom.code.setAttribute("class", attributes[0]);
+		}
+		else {
+			_dom.code.setAttribute("class", stringAttribute + " hide");
 		}
 	};
 
@@ -174,21 +175,23 @@ var canvasPlay = function(options) {
 		_dom.code = document.getElementById("code");
 		var stringAttribute = _dom.code.getAttribute("class");
 		var attributes = stringAttribute.split(' ');
-		if(stringAttribute.indexOf('bottom') !== -1){
+		if (stringAttribute.indexOf('bottom') !== -1) {
 			attributes[0] = "left";
-		}else{
+		}
+		else {
 			attributes[0] = "bottom";
 		}
-		if(attributes[1]){
-			_dom.code.setAttribute("class",attributes[0]+' '+attributes[1]);
-		}else{
-			_dom.code.setAttribute("class",attributes[0]);
+		if (attributes[1]) {
+			_dom.code.setAttribute("class", attributes[0] + ' ' + attributes[1]);
+		}
+		else {
+			_dom.code.setAttribute("class", attributes[0]);
 		}
 	};
 
-	var _reziseCanvas = function(){
-		_dom.canvas.setAttribute('width',window.innerWidth);
-		_dom.canvas.setAttribute('height',window.innerHeight);
+	var _resizeCanvas = function(){
+		_dom.canvas.setAttribute('width', window.innerWidth);
+		_dom.canvas.setAttribute('height', window.innerHeight);
 	};
 	
 	// Public interface

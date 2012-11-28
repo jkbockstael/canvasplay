@@ -24,17 +24,17 @@
 		var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeinput'),{
 			lineNumbers: true,
 			matchBrackets: true,
-			mode: "text/typescript"
+			mode: "text/javascript"
 		});
 		window.cp = canvasPlay();
 		cp.init({
 			canvas: "canvasoutput",
 			code: "codeinput",
+			framerate: "framerate",
 			run: "runbutton",
 			stop: "stopbutton",
-			framerate: "framerate",
-			showHideButton: "showHideButton",
-			switchSideButton: "switchSideButton"
+			hide: "showHideButton",
+			switchSide: "switchSideButton"
 		});
 	</script>
 </body>
