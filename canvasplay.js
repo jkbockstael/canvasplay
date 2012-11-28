@@ -108,6 +108,7 @@ var canvasPlay = function(options) {
 		for (var i = 0, l = _rafMaxId; i <= l; i++) {
 			window.cancelAnimationFrame(i);
 		}
+		_dom.framerate.innerHTML = "FPS: "
 		// Reset canvas, the "yep this is a side-effect but it works" way
 		_dom.canvas.width = _dom.canvas.width + 1;
 		_dom.canvas.width = _dom.canvas.width - 1;
