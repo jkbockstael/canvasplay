@@ -10,7 +10,8 @@ var canvasPlay = function(options) {
 		run: undefined,
 		stop: undefined,
 		hide: undefined,
-		switchSide: undefined
+		switchSide: undefined,
+		fullscreen: undefined
 	};
 	var _storedCode = "";
 	var _frameCounter = 0;
@@ -32,6 +33,7 @@ var canvasPlay = function(options) {
 		_dom.framerate = document.getElementById(options.framerate);
 		_dom.hide = document.getElementById(options.hide);
 		_dom.switchSide = document.getElementById(options.switchSide);
+		_dom.fullscreen = document.getElementById(options.fullscreen);
 		_storedCode = localStorage.getItem("canvasplay_code");
 		if (_storedCode !== undefined && _storedCode !== null) {
 			myCodeMirror.setValue(_storedCode);
@@ -65,12 +67,15 @@ var canvasPlay = function(options) {
 		};
 		_dom.hide.onclick = _showHide;
 		_dom.switchSide.onclick = _switchSide;
+		_dom.fullscreen.onclick = function() {
+			document.documentElement.webkitRequestFullScreen();
+		};
 		_resizeCanvas();
 		window.onresize = function(event){
 			_resizeCanvas();
-		}
+		};
 	}
-
+	
 	// Shim for Chrome + auto-cancel + auto-framerate
 	if (!window.requestAnimationFrame) {
 		window.requestAnimationFrame = function(func) { 
