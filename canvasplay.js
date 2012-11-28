@@ -164,9 +164,11 @@ var canvasPlay = function(options) {
 		if (stringAttribute.indexOf('hide') !== -1) {
 			var attributes = stringAttribute.split(' ');
 			_dom.code.setAttribute("class", attributes[0]);
+			_dom.hide.innerHTML = "Hide";
 		}
 		else {
 			_dom.code.setAttribute("class", stringAttribute + " hide");
+			_dom.hide.innerHTML = "Show";
 		}
 	};
 
