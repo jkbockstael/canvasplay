@@ -1,0 +1,73 @@
+// This is example code for Canvasplay, just paste it in the editor and click "run".
+// Of course this code is ugly and slow, I built Canvasplay to learn something about canvas animations, total noob here.
+var cnv = cp.getCanvas();
+var ctx = cnv.getContext("2d");
+
+// Initial background
+ctx.fillStyle = "rgb(0, 0, 0)";
+ctx.fillRect(0, 0, cnv.width, cnv.height);
+
+var MAXPARTICLES = 1000;
+var particles = [];
+
+// Each frame
+var drawFrame = function() {
+	var frameCounter = cp.getFrameCounter();
+	// Fading
+	ctx.fillStyle = "rgba(0,0,0,1)";
+	ctx.fillRect(0, 0, cnv.width, cnv.height);
+	// Create particles
+	if (((frameCounter % 10) == 0) && (particles.length < MAXPARTICLES)) {
+		var particle = {
+			x: Math.floor(Math.random() * cnv.width),
+			y: Math.floor(Math.random() * cnv.height),
+			w: 5,
+			h: 5
+		};
+		particles.push(particle);
+	}
+
+	// Move particles
+	for (var i = 0, l = particles.length; i < l; i++) {
+		var particle = particles[i];
+		// Chase cursor (quite crude)
+		// FIXME throw in some inertia
+		cnv.mouse = cp.getCursorPosition();
+		var chaseVector = {
+			x: cnv.mouse.x - particle.x,
+			y: cnv.mouse.y - particle.y,
+		};
+		// If cursor is too close, flee
+		var speed = 100;
+		var panic = false;
+		var distance = Math.sqrt((chaseVector.x * chaseVector.x) + 
+			(chaseVector.y * chaseVector.y));
+		if (distance < 50) {
+			speed = 10;
+			panic = true
+			chaseVector.x = - chaseVector.x;
+			chaseVector.y = - chaseVector.y
+		}
+		particle.x = particle.x + chaseVector.x / speed;
+		particle.y = particle.y + chaseVector.y / speed;
+		// Don't be so predictable...
+		var rnd = {
+			x: Math.random() * chaseVector.x / ((panic) ? 5 : 10),
+			y: Math.random() * chaseVector.y / ((panic) ? 5 : 10)
+		}
+		particle.x = Math.floor(particle.x + rnd.x);
+		particle.y = Math.floor(particle.y + rnd.y);
+	}
+	// Draw particles
+	ctx.fillStyle = "rgb(200, 0, 0)";
+	for (var i = 0, l = particles.length; i < l; i++) {
+		var p = particles[i];
+		ctx.fillRect(p.x, p.y, p.w, p.h);
+	}
+	// Next frame
+	frameCounter++;
+	window.requestAnimationFrame(drawFrame);
+};
+
+// First frame
+window.requestAnimationFrame(drawFrame);
