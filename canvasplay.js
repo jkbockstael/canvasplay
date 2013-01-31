@@ -76,25 +76,21 @@ var canvasPlay = function(options) {
 		};
 	}
 	
-	// Shim for Chrome + auto-cancel + auto-framerate
-	if (!window.requestAnimationFrame) {
-		window.requestAnimationFrame = function(func) { 
-			// Framerate
-			var thisFrame = (new Date).getTime();
-			var delta = thisFrame - _lastFrame;
-			_lastFrame = thisFrame;
-			_framerate = Math.floor(1000 / delta);
-			if (_frameCounter % 10 === 0) {
-				_dom.framerate.innerHTML = "FPS: " + _framerate;
-			}
-			var id = window.webkitRequestAnimationFrame(func); 
-			_rafMaxId = id;
-			_frameCounter++;
-		};
-	}
-	if (!window.cancelAnimationFrame) {
-		window.cancelAnimationFrame = window.webkitCancelAnimationFrame;
-	}
+	var _requestAnimationFrame = window.requestAnimationFrame;
+	window.requestAnimationFrame = function(func) { 
+		// Framerate
+		var thisFrame = (new Date).getTime();
+		var delta = thisFrame - _lastFrame;
+		_lastFrame = thisFrame;
+		_framerate = Math.floor(1000 / delta);
+		if (_frameCounter % 10 === 0) {
+			_dom.framerate.innerHTML = "FPS: " + _framerate;
+		}
+		var id = _requestAnimationFrame(func);
+		_rafMaxId = id;
+		_frameCounter++;
+		return id;
+	};
 
 	// Implementation for public interface
 	var _run = function() {
