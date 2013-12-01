@@ -25,7 +25,7 @@ var canvasPlay = function(options) {
 	};
 
 	// Constructor
-	var _init = function(options) {
+	var _init = function _init(options) {
 		_dom.canvas = document.getElementById(options.canvas);
 		_dom.code = document.getElementById(options.code);
 		_dom.run = document.getElementById(options.run);
@@ -40,12 +40,12 @@ var canvasPlay = function(options) {
 		}
 		else {
 			_dom.code.value = "Code here";
-			_dom.code.onfocus = function() {
+			_dom.code.onfocus = function _domCodeOnFocusHandler() {
 				_dom.code.value = "";
 				_dom.code.onfocus = undefined;
 			};
 		}
-		_dom.code.onkeydown = function(e) {
+		_dom.code.onkeydown = function _domCodeOnKeydownHandler(e) {
 			if(e.keyCode === 9) {
 				var start = this.selectionStart;
 				var end = this.selectionEnd;
@@ -61,23 +61,23 @@ var canvasPlay = function(options) {
 		_dom.run.onclick = _run;
 		_dom.stop.disabled = true;
 		_dom.stop.onclick = _stop;
-		_dom.canvas.onmousemove = function(event) {
+		_dom.canvas.onmousemove = function _domCanvasOnMousemoveHandler(event) {
 			_cursor.x = event.layerX;
 			_cursor.y = event.layerY
 		};
 		_dom.hide.onclick = _showHide;
 		_dom.switchSide.onclick = _switchSide;
-		_dom.fullscreen.onclick = function() {
+		_dom.fullscreen.onclick = function _domFullscreenOnClickHandler() {
 			document.documentElement.webkitRequestFullScreen();
 		};
 		_resizeCanvas();
-		window.onresize = function(event){
+		window.onresize = function windowOnResizeHandler(event){
 			_resizeCanvas();
 		};
 	}
 	
 	var _requestAnimationFrame = window.requestAnimationFrame;
-	window.requestAnimationFrame = function(func) { 
+	window.requestAnimationFrame = function requestAnimationFrameWrapper(func) { 
 		// Framerate
 		var thisFrame = (new Date).getTime();
 		var delta = thisFrame - _lastFrame;
@@ -93,7 +93,7 @@ var canvasPlay = function(options) {
 	};
 
 	// Implementation for public interface
-	var _run = function() {
+	var _run = function _run() {
 		var code = myCodeMirror.getValue();
 		_stop();
 		// Store code in local storage
@@ -104,7 +104,7 @@ var canvasPlay = function(options) {
 		_dom.stop.disabled = false;
 	};
 
-	var _stop = function() {
+	var _stop = function _stop() {
 		// Clear any pending animation frames
 		for (var i = 0, l = _rafMaxId; i <= l; i++) {
 			window.cancelAnimationFrame(i);
@@ -116,27 +116,27 @@ var canvasPlay = function(options) {
 		_dom.stop.disabled = true;
 	};
 	
-	var _getCanvas = function() {
+	var _getCanvas = function _getCanvas() {
 		return _dom.canvas;
 	};
 
-	var _getCode = function() {
+	var _getCode = function _getCode() {
 		return _dom.code.value;
 	};
 
-	var _getFramerate = function() {
+	var _getFramerate = function _getFramerate() {
 		return _framerate;
 	};
 
-	var _getFrameCounter = function() {
+	var _getFrameCounter = function _getFrameCounter() {
 		return _frameCounter;
 	};
 	
-	var _getCursorPosition = function() {
+	var _getCursorPosition = function _getCursorPosition() {
 		return _cursor;
 	};
 
-	var _log = function(message, level) {
+	var _log = function _log(message, level) {
 		if (level === undefined) {
 			level = "info";
 		}
@@ -159,7 +159,7 @@ var canvasPlay = function(options) {
 		}
 	};
 
-	var _showHide = function(){
+	var _showHide = function _showHide(){
 		// Refresh the variable with current state of dom
 		_dom.code = document.getElementById("code");
 		var stringAttribute = _dom.code.getAttribute("class");
@@ -174,7 +174,7 @@ var canvasPlay = function(options) {
 		}
 	};
 
-	var _switchSide = function(){
+	var _switchSide = function _switchSide(){
 		// Refresh the variable with current state of dom
 		_dom.code = document.getElementById("code");
 		var stringAttribute = _dom.code.getAttribute("class");
@@ -193,38 +193,38 @@ var canvasPlay = function(options) {
 		}
 	};
 
-	var _resizeCanvas = function(){
+	var _resizeCanvas = function _resizeCanvas(){
 		_dom.canvas.setAttribute('width', window.innerWidth);
 		_dom.canvas.setAttribute('height', window.innerHeight);
 	};
 	
 	// Public interface
 	return {
-		init: function(options) {
+		init: function init(options) {
 			return _init(options);
 		},
-		run: function() {
+		run: function run() {
 			return _run(code);
 		},
-		stop: function() {
+		stop: function stop() {
 			return _stop();
 		},
-		getCanvas: function() {
+		getCanvas: function getCanvas() {
 			return _getCanvas();
 		},
-		getCode: function() {
+		getCode: function getCode() {
 			return _getCode();
 		},
-		getFramerate: function() {
+		getFramerate: function getFramerate() {
 			return _getFramerate();
 		},
-		getFrameCounter: function() {
+		getFrameCounter: function getFrameCounter() {
 			return _getFrameCounter();
 		},
-		getCursorPosition: function() {
+		getCursorPosition: function getCursorPosition() {
 			return _getCursorPosition();
 		},
-		log : function(message, level) {
+		log : function log(message, level) {
 			return _log(message, level);
 		}
 	};
